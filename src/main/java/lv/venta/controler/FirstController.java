@@ -1,5 +1,6 @@
 package lv.venta.controler;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,12 @@ public class FirstController {
 		return "product-test";
 		
 	}
+	
+	// Create a list of 3 products 
+	
+	// public ArrayList<Product> threeProducts = new ArrayList<Product> ();
+	
+	// @GetMapping("")
 	
 	
 }
