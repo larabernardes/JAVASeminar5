@@ -2,14 +2,19 @@ package lv.venta.service.impl;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lv.venta.model.Product;
+import lv.venta.repo.IProductRepo;
 import lv.venta.service.IProductCRUDService;
 import lv.venta.service.IProductFilteringService;
 
 @Service
 public class ProductServiceImpl implements IProductCRUDService, IProductFilteringService {
+	
+	@Autowired
+	private IProductRepo productRepo;
 
 	@Override
 	public ArrayList<Product> fiterByQuantityThreshold(int treshhold) throws Exception {
@@ -31,28 +36,52 @@ public class ProductServiceImpl implements IProductCRUDService, IProductFilterin
 
 	@Override
 	public ArrayList<Product> retrieveAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(productRepo.count() == 0) throw new Exception("Product table is empty!");
+		
+		ArrayList<Product> result = (ArrayList<Product>)productRepo.findAll();
+		
+		return result;
 	}
 
 	@Override
 	public Product retrieveById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(id <= 0) throw new Exception("ID should be positive!");
+		
+		if(productRepo.existsById(id))
+			return productRepo.findById(id).get();
+		
+		throw new Exception("Product with id (" + id + ") not in the table");
 	}
 
 	@Override
 	public void updateById(int id, String title, String description, float price, int quantity) throws Exception {
-		// TODO Auto-generated method stub
+		if(id <= 0 || title == null || description == null || price < 0.0f || quantity < 0) throw new Exception("Problems with input!");
+		
+		Product product = productRepo.findById(id).get();
+		product.setPrice(price);
+		product.setQuantity(quantity);
+		product.setDescription(description);
+		product.setTitle(title);
+			
+		productRepo.save(product);
+		
+		throw new Exception("Product with id (" + id + ") not in the table");
+			
 		
 	}
 
 	@Override
 	public void deleteById(int id) throws Exception {
-		// TODO Auto-generated method stub
+		if(id <= 0) throw new Exception("ID should be positive!");
+		
+		Product product = productRepo.findById(id).get();
+		productRepo.delete(product);
+		
+		productRepo.save(product);
+		
+		throw new Exception("Product with id (" + id + ") not in the table");
 		
 	}
-	
 	
 	
 
