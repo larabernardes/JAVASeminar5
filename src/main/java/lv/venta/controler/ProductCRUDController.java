@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lv.venta.model.Product;
 import lv.venta.service.IProductCRUDService;
@@ -53,6 +55,44 @@ public class ProductCRUDController {
 			
 		}
 	}
+	
+	@GetMapping("/one") // localhost:8080/product/crud/one?id=1
+	public String getProductCrudByIdWithQuestionMark(@RequestParam("id")int id, Model model) {
+		try
+		{
+		Product result = productCRUDService.retrieveById(id);
+		model.addAttribute("mypackage", result);
+		return "product-test";
+		}
+		catch (Exception e)
+		{
+			model.addAttribute("mypackage", e.getMessage());
+			return "error-page";
+			
+		}
+	}
+	
+	@GetMapping("/create") // localhost:8080/product/crud/create
+	public String getProductCRUDCreate(Model model) {
+		model.addAttribute("product", new Product());
+		return "create-product-page";
+	}
+	
+	@PostMapping("/create")
+	public String postProductCRUDCreate(Product product, Model model) {
+		
+		try
+		{
+			productCRUDService.create(product.getTitle(), product.getDescription(), product.getPrice(), product.getQuantity());
+			return "redirect:/product/crud/all";
+		
+		}
+		catch(Exception e) {
+			model.addAttribute("mypackage", e.getMessage());
+			return "error-page";
+		}
+	}
+	
 	
 	
 	
