@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lv.venta.model.Product;
 import lv.venta.service.IProductCRUDService;
+
 
 @Controller
 @RequestMapping("/product/crud")
@@ -35,6 +37,23 @@ public class ProductCRUDController {
 		}
 	
 	}
+	
+	@GetMapping("/all/{id}")
+	public String getProductCrudById(@PathVariable("id")int id, Model model) {
+		try
+		{
+		Product result = productCRUDService.retrieveById(id);
+		model.addAttribute("mypackage", result);
+		return "product-test";
+		}
+		catch (Exception e)
+		{
+			model.addAttribute("mypackage", e.getMessage());
+			return "error-page";
+			
+		}
+	}
+	
 	
 	
 	
