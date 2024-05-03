@@ -1,0 +1,25 @@
+<html xmlns:th"http://www.thymreleaf.org">
+	
+	<body>
+		
+		<p> All products: </p>
+		<table>
+			
+			<tr th:each="temp : ${mypackage} "> 
+				
+				<td th:text="${temp.getId()}"> </td> 
+				<td th:text="${temp.getTitle()}"> </p> 
+				<td th:text="${temp.getDescription()}"> </td> 
+				<td th:text="${temp.getPrice()}"> </p> 
+				<td th:text="${temp.getQuantity()}"> </td> 
+				
+			</tr>
+			
+		</table>
+		
+	
+		<p th:text="${mypackage}"> </p> 
+		
+	</body>
+	
+</html>
