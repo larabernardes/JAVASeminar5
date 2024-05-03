@@ -33,7 +33,7 @@ public class ProductServiceImpl implements IProductCRUDService, IProductFilterin
 		if(title == null || description == null || price < 0 || quantity < 0)
 			throw new Exception("Problem with input parameters");
 			
-		Product productFromDB = productRepo.findByTitleDescriptionAndPrice(title, description, price);
+		Product productFromDB = productRepo.findByTitleAndDescriptionAndPrice(title, description, price);
 		if(productFromDB!=null) {
 			productFromDB.setQuantity(productFromDB.getQuantity() + quantity); // will change only in back-end layer
 			productRepo.save(productFromDB); // will change also in database layer

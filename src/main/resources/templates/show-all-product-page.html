@@ -5,20 +5,27 @@
 		<p> All products: </p>
 		<table>
 			
+			<tr>
+				<th border ="1"> ID </th>
+				<th border = "1"> Title </th>
+				<th border = "1"> Description </th>
+				<th> Price </th>
+				<th> Quantity </th>
+				
+				
+			</tr>
+			
 			<tr th:each="temp : ${mypackage} "> 
 				
 				<td th:text="${temp.getId()}"> </td> 
-				<td th:text="${temp.getTitle()}"> </p> 
+				<td th:text="${temp.getTitle()}"> </td> 
 				<td th:text="${temp.getDescription()}"> </td> 
-				<td th:text="${temp.getPrice()}"> </p> 
+				<td th:text="${temp.getPrice()}+ ' eur' "> </p> 
 				<td th:text="${temp.getQuantity()}"> </td> 
 				
 			</tr>
 			
 		</table>
-		
-	
-		<p th:text="${mypackage}"> </p> 
 		
 	</body>
 	
