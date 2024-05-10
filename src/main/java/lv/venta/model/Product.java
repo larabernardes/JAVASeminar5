@@ -6,6 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,15 +35,26 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@NotNull
+	@Pattern(regexp = "[A-za-z ]+")
+	@Size(min = 3, max = 20)
 	@Column(name = "TITLE")
 	private String title;
 	
+	@NotNull
+	@Pattern(regexp = "[A-za-z.; ]+")
+	@Min(5)
+	@Max(1000)
 	@Column(name = "DESCRIPTION")
 	private String description;
 	
+	@Min(0)
+	@Max(1000)
 	@Column(name = "PRICE")
 	private float price;
 	
+	@Min(0)
+	@Max(100000)
 	@Column(name = "QUANTITY")
 	private int quantity;
 
