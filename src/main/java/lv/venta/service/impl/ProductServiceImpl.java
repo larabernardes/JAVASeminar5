@@ -68,14 +68,19 @@ public class ProductServiceImpl implements IProductCRUDService, IProductFilterin
 		if(id <= 0 || title == null || description == null || price < 0.0f || quantity < 0) throw new Exception("Problems with input!");
 		
 		Product product = productRepo.findById(id).get();
-		product.setPrice(price);
-		product.setQuantity(quantity);
-		product.setDescription(description);
-		product.setTitle(title);
+		if(product!=null)
+		{
+			product.setPrice(price);
+			product.setQuantity(quantity);
+			product.setDescription(description);
+			product.setTitle(title);
 			
-		productRepo.save(product);
-		
-		throw new Exception("Product with id (" + id + ") not in the table");
+			productRepo.save(product);
+		}
+		else
+		{
+			throw new Exception("Product with id (" + id + ") not in the table");
+		}
 			
 		
 	}
