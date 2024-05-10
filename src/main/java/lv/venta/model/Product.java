@@ -36,15 +36,14 @@ public class Product {
 	private int id;
 	
 	@NotNull
-	@Pattern(regexp = "[A-za-z ]+")
+	@Pattern(regexp = "[A-za-z ]+", message = "Only letters allowed")
 	@Size(min = 3, max = 20)
 	@Column(name = "TITLE")
 	private String title;
 	
 	@NotNull
-	@Pattern(regexp = "[A-za-z.; ]+")
-	@Min(5)
-	@Max(1000)
+	@Pattern(regexp = "[A-za-z.,; ]+")
+	@Size(min = 3, max = 20)
 	@Column(name = "DESCRIPTION")
 	private String description;
 	
