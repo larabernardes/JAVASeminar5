@@ -87,14 +87,8 @@ public class ProductServiceImpl implements IProductCRUDService, IProductFilterin
 
 	@Override
 	public void deleteById(int id) throws Exception {
-		if(id <= 0) throw new Exception("ID should be positive!");
-		
-		Product product = productRepo.findById(id).get();
-		productRepo.delete(product);
-		
-		productRepo.save(product);
-		
-		throw new Exception("Product with id (" + id + ") not in the table");
+		Product productForID = retrieveById(id);
+		productRepo.delete(productForID);
 		
 	}
 	
