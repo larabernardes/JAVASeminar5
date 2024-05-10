@@ -16,6 +16,10 @@ import jakarta.validation.Valid;
 import lv.venta.model.Product;
 import lv.venta.service.IProductCRUDService;
 
+// TODO
+// Finish Service IMplementation: filterByQuantityTreshold and filterByPriceBetween
+// Create Controller class with two get mapping controllers and call both service functions
+// Test it!
 
 @Controller
 @RequestMapping("/product/crud")
@@ -119,16 +123,23 @@ public class ProductCRUDController {
 	}
 	
 	@PostMapping("/update/{id}")
-	public String postProductCrudCreate(@PathVariable("id")int id, Product product, Model model) {
-		try
-		{
-			productCRUDService.updateById(id, product.getTitle(), product.getDescription(), product.getPrice(), product.getQuantity());
-			return "redirect:/product/crud/all/" + id;
+	public String postProductCrudCreate(@PathVariable("id")int id, @Valid Product product, BindingResult result, Model model) {
 		
+		if(result.hasErrors()) {
+			return "create-product-page"; // this will show the same html page 
 		}
-		catch(Exception e) {
-			model.addAttribute("mypackage", e.getMessage());
-			return "error-page";
+		else {
+	
+			try
+			{
+				productCRUDService.updateById(id, product.getTitle(), product.getDescription(), product.getPrice(), product.getQuantity());
+				return "redirect:/product/crud/all/" + id;
+			
+			}
+			catch(Exception e) {
+				model.addAttribute("mypackage", e.getMessage());
+				return "error-page";
+			}
 		}
 		
 	}
